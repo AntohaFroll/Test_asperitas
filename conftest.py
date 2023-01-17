@@ -1,11 +1,10 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(scope="session")
 def browser():
     print("\nstart browser for test")
-    browser = webdriver.Chrome()
-    yield browser
+    driver = webdriver.Chrome()
+    yield driver
     print("\nquit browser")
-    browser.quit()
+    driver.quit()
