@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 
 
-@pytest.fixture()
+@pytest.fixture
 def driver():
     print("\nstart browser for test")
     driver = webdriver.Chrome()

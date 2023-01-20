@@ -1,7 +1,6 @@
 class BasePage:
 
     url = "https://asperitas.vercel.app/"
-    login_url = "https://asperitas.vercel.app/login"
 
     def __init__(self, driver):
         self.driver = driver
