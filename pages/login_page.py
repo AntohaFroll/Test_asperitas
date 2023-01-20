@@ -29,7 +29,7 @@ class LoginPage(BasePage):
         button_log_in.click()
         button_log_in_form = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
         button_log_in_form.click()
-        assert len(self.driver.find_elements(By.XPATH, '//span[text()="required"]')) == 1,\
+        assert len(self.driver.find_elements(By.XPATH, '//span[text()="required"]')) == 2,\
             "Authorization failed!"
 
         time.sleep(5)

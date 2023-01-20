@@ -4,10 +4,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+
 url = "https://asperitas.vercel.app/"
 
-class TestRegistration():
 
+class TestRegistration:
 
     def test_valid_credentials(self, driver):
         driver.get(url)
@@ -28,7 +29,6 @@ class TestRegistration():
         user_log_in = driver.find_elements(By.XPATH, '//a[@href="/login"]')
         assert len(user_log_in) == 0, "Registration failed"
 
-
     def test_invalid_credentials(self, driver):
         driver.get(url)
         button_sign_up = driver.find_element(By.XPATH, '//a[@href="/signup"]')
@@ -39,4 +39,3 @@ class TestRegistration():
         button_sign_up_form.click()
         invalid_characters_hint = driver.find_elements(By.XPATH, '//span[text()="contains invalid characters"]')
         assert len(invalid_characters_hint) == 1
-
