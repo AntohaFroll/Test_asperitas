@@ -17,8 +17,8 @@ class LoginPage(BasePage):
     def login_valid(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_BUTTON).click()
-        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(self.USER_NAME)
-        self.driver.find_element(By.XPATH, self.LOCATOR_PASSWORD_FIELD).send_keys(self.USER_PASSWORD)
+        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys()
+        self.driver.find_element(By.XPATH, self.LOCATOR_PASSWORD_FIELD).send_keys()
         self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
         create_post_button = self.driver.find_elements(By.XPATH, '//a[contains(@class, "jEpBlT")]')
         assert len(create_post_button) == 1, "Login failed (valid values)!"
