@@ -12,13 +12,13 @@ def test_open_site(driver):
     base_page.should_page_open()
 
 
-def test_signup_valid(driver):
+def test_signup_valid(driver, new_user):
     base_page = BasePage(driver)
     signup_page = SignupPage(driver)
 
     base_page.open()
 
-    signup_page.signup_valid()
+    signup_page.signup_valid(new_user.username, new_user.password)
 
 
 def test_signup_invalid(driver):

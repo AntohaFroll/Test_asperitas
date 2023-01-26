@@ -17,7 +17,7 @@ class SignupPage(BasePage):
     USER_NAME = "AntohaFroll"
     USER_PASSWORD = "qwerty123456"
 
-    def signup_valid(self):
+    def signup_valid(self, username, password):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_SIGNUP_BUTTON).click()
         username = uuid.uuid4().__str__().split("-")[-1]
