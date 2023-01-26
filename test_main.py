@@ -30,6 +30,7 @@ def test_signup_invalid(driver):
     signup_page.signup_invalid()
 
 
+@pytest.mark.only
 def test_login_valid(driver):
     base_page = BasePage(driver)
     login_page = LoginPage(driver)
