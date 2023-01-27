@@ -14,14 +14,18 @@ def driver():
     driver.quit()
 
 
-class CreateUser(User):
-    
-    @pytest.fixture
-    def create_user(self, username, password):
-        print("\ncreate user")
-        self.username = uuid.uuid4().__str__().split("-")[-1]
-        self.password = uuid.uuid4().__str__().split("-")[-1]
-        url = "https://asperitas.vercel.app/api/register"
-        data = {"username": username, "password": password}
-        create_user = requests.post(url, json=data)
-        return create_user
+@pytest.fixture
+def new_user():
+    print("\ncreating user")
+
+    username = uuid.uuid4().__str__().split("-")[-1]
+    password = uuid.uuid4().__str__().split("-")[-1]
+
+    url = "https://asperitas.vercel.app/api/register"
+    data = {"username": username, "password": password}
+
+    create_user_response = requests.post(url, json=data)
+
+    assert create_user_response.json()["token"] != "", "User not create!"
+
+    return User(username, password)

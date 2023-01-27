@@ -30,20 +30,20 @@ def test_signup_invalid(driver):
     signup_page.signup_invalid()
 
 
+def test_login_valid(driver, new_user):
+    base_page = BasePage(driver)
+    login_page = LoginPage(driver)
+
+    base_page.open()
+
+    login_page.login_valid(new_user)
+
+
 @pytest.mark.only
-def test_login_valid(driver):
+def test_login_invalid(driver, new_user):
     base_page = BasePage(driver)
     login_page = LoginPage(driver)
 
     base_page.open()
 
-    login_page.login_valid()
-
-
-def test_login_invalid(driver):
-    base_page = BasePage(driver)
-    login_page = LoginPage(driver)
-
-    base_page.open()
-
-    login_page.login_invalid()
+    login_page.login_invalid(new_user)
