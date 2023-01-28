@@ -29,3 +29,25 @@ def new_user():
     assert create_user_response.json()["token"] != "", "User not create!"
 
     return User(username, password)
+
+
+# @pytest.fixture
+# def new_user_authorized():
+#     print("\ncreating and authorization user")
+#
+#     username = uuid.uuid4().__str__().split("-")[-1]
+#     password = uuid.uuid4().__str__().split("-")[-1]
+#
+#     reg_url = "https://asperitas.vercel.app/api/register"
+#     auth_url = "https://asperitas.vercel.app/api/login"
+#     data = {"username": username, "password": password}
+#
+#     create_user_response = requests.post(reg_url, json=data)
+#
+#     assert create_user_response.json()["token"] != "", "User not created!"
+#
+#     authorization_user_response = requests.post(auth_url, json=data)
+#
+#     assert authorization_user_response.json()["token"] != "", "User not authorized!"
+#
+#     return User(username, password)

@@ -2,6 +2,7 @@ import pytest
 from pages.base_page import BasePage
 from pages.login_page import LoginPage
 from pages.signup_page import SignupPage
+from pages.post_page import PostPage
 
 
 def test_open_site(driver):
@@ -39,7 +40,6 @@ def test_login_valid(driver, new_user):
     login_page.login_valid(new_user)
 
 
-@pytest.mark.only
 def test_login_invalid(driver, new_user):
     base_page = BasePage(driver)
     login_page = LoginPage(driver)
@@ -47,3 +47,15 @@ def test_login_invalid(driver, new_user):
     base_page.open()
 
     login_page.login_invalid(new_user)
+
+
+@pytest.mark.only
+def test_create_text_post(driver, new_user):
+    base_page = BasePage(driver)
+    login_page = LoginPage(driver)
+    post_page = PostPage(driver)
+
+    base_page.open()
+
+    login_page.login_valid(new_user)
+    post_page.create_text_post()
