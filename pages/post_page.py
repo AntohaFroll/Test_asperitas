@@ -31,5 +31,5 @@ class PostPage(BasePage):
         assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_TITLE_POST)) == 1, "Post not created!"
 
     def delete_post(self):
-        self.driver.implicitly_wait(5)
+        pass
 
