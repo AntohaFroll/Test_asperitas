@@ -25,7 +25,6 @@ class PostPage(BasePage):
     def create_text_post(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_CREATE_POST_BUTTON).click()
-        time.sleep(1)
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, self.LOCATOR_TEXT_RADIOBUTTON))).click()
         self.driver.find_element(By.XPATH, self.LOCATOR_CATEGORY_SELECTOR).click()
@@ -39,9 +38,8 @@ class PostPage(BasePage):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_HEADER_USERNAME).click()
         amount_posts_before_delete = len(self.driver.find_elements(By.XPATH, '//li'))
-        self.driver.find_elements(By.XPATH, self.LOCATOR_TITLE_POST)[1].click()
+        self.driver.find_element(By.XPATH, self.LOCATOR_TITLE_POST).click()
         time.sleep(3)
         self.driver.find_element(By.XPATH, self.LOCATOR_DELETE_BUTTON).click()
         amount_posts_after_delete = len(self.driver.find_elements(By.XPATH, '//li'))
         assert amount_posts_before_delete > amount_posts_after_delete, "Post not deleted!"
-        time.sleep(3)

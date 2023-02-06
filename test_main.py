@@ -48,7 +48,7 @@ def test_login_invalid(driver, new_user):
 
     login_page.login_invalid(new_user)
 
-
+@pytest.mark.only
 def test_create_text_post(driver, new_user):
     base_page = BasePage(driver)
     login_page = LoginPage(driver)
@@ -60,7 +60,7 @@ def test_create_text_post(driver, new_user):
     post_page.create_text_post()
 
 
-@pytest.mark.only
+
 def test_delete_post(driver, new_user):
     base_page = BasePage(driver)
     login_page = LoginPage(driver)

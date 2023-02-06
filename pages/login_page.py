@@ -22,6 +22,7 @@ class LoginPage(BasePage):
         self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(user.username)
         self.driver.find_element(By.XPATH, self.LOCATOR_PASSWORD_FIELD).send_keys(user.password)
         self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
+        #переделать проверку
         create_post_button = self.driver.find_elements(By.XPATH, self.LOCATOR_CREATE_POST_BUTTON)
         assert len(create_post_button) == 1, "Login failed (valid values)!"
 
