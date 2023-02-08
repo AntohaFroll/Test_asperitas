@@ -8,6 +8,9 @@ import uuid
 
 
 class PostPage(BasePage):
+    title = uuid.uuid4().__str__().split("-")[-1]
+    text = uuid.uuid4().__str__().split("-")[-1]
+
     LOCATOR_CREATE_POST_BUTTON = '//a[contains(@class, "exvOBC")]'
     LOCATOR_TEXT_RADIOBUTTON = '//label[@for="text"]'
     LOCATOR_CATEGORY_SELECTOR = '//select[@name="category"]'
@@ -17,14 +20,14 @@ class PostPage(BasePage):
     LOCATOR_CREATE_POST_FORM_BUTTON = '//button[@type="submit"]'
     LOCATOR_TITLE_POST = '//div[contains(@class, "Title__Wrapper")]'
     LOCATOR_HEADER_USERNAME = '//span[contains(@class, "HeaderUsernameText")]'
-    LOCATOR_DELETE_BUTTON = '//button[contains(@class, "Delete")]'
-
-    title = uuid.uuid4().__str__().split("-")[-1]
-    text = uuid.uuid4().__str__().split("-")[-1]
+    LOCATOR_DELETE_BUTTON = '//button[contains(@class, "DeleteButton")]'
+    LOCATOR_EMPTY_POST_LIST_LABEL = '//div[contains(@class, "Empty__Wrapper")]'
+    LOCATOR_TITLE_POST_TEXT = f'//a[text()="{title}"]'
 
     def create_text_post(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_CREATE_POST_BUTTON).click()
+        time.sleep(1)
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, self.LOCATOR_TEXT_RADIOBUTTON))).click()
         self.driver.find_element(By.XPATH, self.LOCATOR_CATEGORY_SELECTOR).click()
@@ -37,9 +40,11 @@ class PostPage(BasePage):
     def delete_post(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_HEADER_USERNAME).click()
-        amount_posts_before_delete = len(self.driver.find_elements(By.XPATH, '//li'))
-        self.driver.find_element(By.XPATH, self.LOCATOR_TITLE_POST).click()
-        time.sleep(3)
+        # amount_posts_before_delete = len(self.driver.find_elements(By.XPATH, '//li'))
+        self.driver.find_element(By.XPATH, self.LOCATOR_TITLE_POST_TEXT).click()
+        # time.sleep(3)
         self.driver.find_element(By.XPATH, self.LOCATOR_DELETE_BUTTON).click()
-        amount_posts_after_delete = len(self.driver.find_elements(By.XPATH, '//li'))
-        assert amount_posts_before_delete > amount_posts_after_delete, "Post not deleted!"
+        # amount_posts_after_delete = len(self.driver.find_elements(By.XPATH, '//li'))
+        # assert amount_posts_before_delete > amount_posts_after_delete, "Post not deleted!"
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, self.LOCATOR_EMPTY_POST_LIST_LABEL)))
