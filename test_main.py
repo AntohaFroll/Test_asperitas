@@ -60,7 +60,6 @@ def test_create_text_post(driver, new_user):
     post_page.create_text_post()
 
 
-@pytest.mark.only
 def test_delete_post(driver, new_user):
     base_page = BasePage(driver)
     login_page = LoginPage(driver)
@@ -71,3 +70,27 @@ def test_delete_post(driver, new_user):
     login_page.login_valid(new_user)
     post_page.create_text_post()
     post_page.delete_post()
+
+
+def test_create_comment(driver, new_user):
+    base_page = BasePage(driver)
+    login_page = LoginPage(driver)
+    post_page = PostPage(driver)
+
+    base_page.open()
+
+    login_page.login_valid(new_user)
+    post_page.create_comment()
+
+
+@pytest.mark.only
+def test_delete_comment(driver, new_user):
+    base_page = BasePage(driver)
+    login_page = LoginPage(driver)
+    post_page = PostPage(driver)
+
+    base_page.open()
+
+    login_page.login_valid(new_user)
+    post_page.create_comment()
+    post_page.delete_comment()

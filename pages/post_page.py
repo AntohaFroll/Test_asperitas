@@ -22,12 +22,16 @@ class PostPage(BasePage):
     LOCATOR_HEADER_USERNAME = '//span[contains(@class, "HeaderUsernameText")]'
     LOCATOR_DELETE_BUTTON = '//button[contains(@class, "DeleteButton")]'
     LOCATOR_EMPTY_POST_LIST_LABEL = '//div[contains(@class, "Empty__Wrapper")]'
-    LOCATOR_TITLE_POST_TEXT = f'//a[text()="{title}"]'
+    LOCATOR_TITLE_POST_TEXT = '//div[contains(@class, "Title__Wrapper")]/a'
+    LOCATOR_COMMENT_TEXT_FIELD = '//textarea[@name="comment"]'
+    LOCATOR_SUBMIT_BUTTON = '//button[@type="submit"]'
+    LOCATOR_CREATED_COMMENT = f'//p[text()="{text}"]'
+    LOCATOR_COMMENT_COUNTER = '//div[contains(@class, "Detail__Wrapper")]/a'
 
     def create_text_post(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_CREATE_POST_BUTTON).click()
-        time.sleep(1)
+        time.sleep(2)
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((By.XPATH, self.LOCATOR_TEXT_RADIOBUTTON))).click()
         self.driver.find_element(By.XPATH, self.LOCATOR_CATEGORY_SELECTOR).click()
@@ -35,16 +39,30 @@ class PostPage(BasePage):
         self.driver.find_element(By.XPATH, self.LOCATOR_TITLE_FIELD).send_keys(self.title)
         self.driver.find_element(By.XPATH, self.LOCATOR_TEXT_FIELD).send_keys(self.text)
         self.driver.find_element(By.XPATH, self.LOCATOR_CREATE_POST_FORM_BUTTON).click()
-        assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_TITLE_POST)) == 1, "Post not created!"
+        assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_TITLE_POST)) == 1,\
+            "Post not created!"
 
     def delete_post(self):
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH, self.LOCATOR_HEADER_USERNAME).click()
-        # amount_posts_before_delete = len(self.driver.find_elements(By.XPATH, '//li'))
         self.driver.find_element(By.XPATH, self.LOCATOR_TITLE_POST_TEXT).click()
-        # time.sleep(3)
         self.driver.find_element(By.XPATH, self.LOCATOR_DELETE_BUTTON).click()
-        # amount_posts_after_delete = len(self.driver.find_elements(By.XPATH, '//li'))
-        # assert amount_posts_before_delete > amount_posts_after_delete, "Post not deleted!"
         WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, self.LOCATOR_EMPTY_POST_LIST_LABEL)))
+            EC.visibility_of_element_located((By.XPATH, self.LOCATOR_EMPTY_POST_LIST_LABEL)),
+            "Post not deleted!")
+
+    def create_comment(self):
+        self.driver.implicitly_wait(5)
+        self.driver.find_elements(By.XPATH, self.LOCATOR_COMMENT_COUNTER)[0].click()
+        self.driver.find_element(By.XPATH, self.LOCATOR_COMMENT_TEXT_FIELD).send_keys(self.text)
+        self.driver.find_element(By.XPATH, self.LOCATOR_SUBMIT_BUTTON).click()
+        WebDriverWait(self.driver, 10).until(
+            EC.text_to_be_present_in_element((By.XPATH, self.LOCATOR_CREATED_COMMENT), self.text),
+            "Comment not deleted!")
+
+    def delete_comment(self):
+        self.driver.implicitly_wait(5)
+        self.driver.find_elements(By.XPATH, self.LOCATOR_DELETE_BUTTON)[0].click()
+        WebDriverWait(self.driver, 10).until(
+            EC.invisibility_of_element_located((By.XPATH, self.LOCATOR_CREATED_COMMENT)),
+            "Comment not deleted!")
