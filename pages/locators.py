@@ -15,7 +15,7 @@ class LoginPageLocators:
     MUST_BE_MORE_THAN_8_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="must be more than 8 characters"]')
 
 
-class SignupLocators:
+class SignupPageLocators:
     SIGNUP_BUTTON = (By.XPATH, '//a[@href="/signup"]')
     USERNAME_FIELD = (By.XPATH, '//input[@name="username"]')
     PASSWORD_FIELD = (By.XPATH, '//input[@name="password"]')
