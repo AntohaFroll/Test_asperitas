@@ -1,4 +1,7 @@
-from selenium.webdriver.common.by import By
+from .locators import BasePageLocators
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 
 class BasePage:
@@ -14,6 +17,37 @@ class BasePage:
     def go_to(self, url):
         self.driver.get(url)
 
-    def should_page_open(self):
-        logo = self.driver.find_elements(By.XPATH, '//a[text()="asperitas"]')
-        assert len(logo) == 1, "Page don't open!"
+    def should_be_open_page(self):
+        assert self.is_element_present(*BasePageLocators.LOGO), \
+            "Page don't open!"
+
+    def is_element_present(self, how, what):
+        try:
+            self.driver.find_element(how, what)
+        except NoSuchElementException:
+            return False
+        return True
+
+    def is_element_disappeared(self, how, what, timeout=3):
+        try:
+            WebDriverWait(self.driver, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
+
+    def wait_element_present(self, how, what):
+        try:
+            WebDriverWait(self.driver, 3). \
+                until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
+
+    def wait_element_to_be_clickable(self, how, what):
+        try:
+            WebDriverWait(self.driver, 3). \
+                until(EC.element_to_be_clickable((how, what)))
+        except TimeoutException:
+            return False
+        return True

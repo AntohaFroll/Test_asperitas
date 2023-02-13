@@ -1,16 +1,9 @@
-from pages.base_page import BasePage
+from .base_page import BasePage
+from .locators import LoginPageLocators
 from selenium.webdriver.common.by import By
 
 
 class LoginPage(BasePage):
-
-    LOCATOR_LOGIN_BUTTON = '//a[@href="/login"]'
-    LOCATOR_USER_NAME_FIELD = '//input[@name="username"]'
-    LOCATOR_PASSWORD_FIELD = '//input[@name="password"]'
-    LOCATOR_LOGIN_FORM_BUTTON = '//button[@type="submit"]'
-    LOCATOR_REQUIRED_MESSAGE = '//span[text()="required"]'
-    LOCATOR_CONTAINS_INVALID_CHARACTERS = '//span[text()="contains invalid characters"]'
-    LOCATOR_MUST_BE_MORE_THAN_8_CHARACTERS = '//span[text()="must be more than 8 characters"]'
     INVALID_USERNAME = "$"
     SHORT_PASSWORD = "q"
     INVALID_PASSWORD = "qwerty123456"
@@ -18,41 +11,41 @@ class LoginPage(BasePage):
 
     def login_valid(self, user):
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_BUTTON).click()
-        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(user.username)
-        self.driver.find_element(By.XPATH, self.LOCATOR_PASSWORD_FIELD).send_keys(user.password)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
+        self.driver.find_element(*LoginPageLocators.PASSWORD_FIELD).send_keys(user.password)
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON_IN_FORM).click()
         header_username = self.driver.find_elements(By.XPATH, f'//span[text()="{user.username}"]')
         assert len(header_username) == 1, "Login failed (valid values)!"
 
     def login_invalid(self, user):
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_BUTTON).click()
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
-        assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_REQUIRED_MESSAGE)) == 2, \
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON_IN_FORM).click()
+        assert len(self.driver.find_elements(*LoginPageLocators.REQUIRED_MESSAGE)) == 2, \
             "Login failed (no values)!"
 
-        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(self.INVALID_USERNAME)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
-        assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_CONTAINS_INVALID_CHARACTERS)) == 1, \
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(self.INVALID_USERNAME)
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON_IN_FORM).click()
+        assert len(self.driver.find_elements(*LoginPageLocators.CONTAINS_INVALID_CHARACTERS_MESSAGE)) == 1, \
             "Login failed (invalid user name)!"
 
         self.driver.refresh()
-        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(user.username)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
-        assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_REQUIRED_MESSAGE)) == 1, \
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON_IN_FORM).click()
+        assert len(self.driver.find_elements(*LoginPageLocators.REQUIRED_MESSAGE)) == 1, \
             "Login failed (no password)!"
 
         self.driver.refresh()
-        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(user.username)
-        self.driver.find_element(By.XPATH, self.LOCATOR_PASSWORD_FIELD).send_keys(self.SHORT_PASSWORD)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
-        assert len(self.driver.find_elements(By.XPATH, self.LOCATOR_MUST_BE_MORE_THAN_8_CHARACTERS)) == 1, \
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
+        self.driver.find_element(*LoginPageLocators.PASSWORD_FIELD).send_keys(self.SHORT_PASSWORD)
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON_IN_FORM).click()
+        assert len(self.driver.find_elements(*LoginPageLocators.MUST_BE_MORE_THAN_8_CHARACTERS_MESSAGE)) == 1, \
             "Login failed (short password)!"
 
         self.driver.refresh()
-        self.driver.find_element(By.XPATH, self.LOCATOR_USER_NAME_FIELD).send_keys(user.username)
-        self.driver.find_element(By.XPATH, self.LOCATOR_PASSWORD_FIELD).send_keys(self.INVALID_PASSWORD)
-        self.driver.find_element(By.XPATH, self.LOCATOR_LOGIN_FORM_BUTTON).click()
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
+        self.driver.find_element(*LoginPageLocators.PASSWORD_FIELD).send_keys(self.INVALID_PASSWORD)
+        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON_IN_FORM).click()
         header_username = self.driver.find_elements(By.XPATH, f'//span[text()="{user.username}"]')
         assert len(header_username) == 0, "Login failed (invalid password)!"
