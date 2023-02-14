@@ -32,6 +32,34 @@ def new_user():
 
 
 # @pytest.fixture
+# def generate_data():
+#     username = uuid.uuid4().__str__().split("-")[-1]
+#     password = uuid.uuid1().__str__().split("-")[-1]
+#     text = uuid.uuid4().__str__().split("-")[-1]
+#     # return username, password, text
+#     return {"username": username, "password": password, "text": text}
+
+@pytest.fixture
+def generate_username():
+    username = uuid.uuid4().__str__().split("-")[-1]
+
+    return username
+
+
+@pytest.fixture
+def generate_password():
+    password = uuid.uuid1().__str__().split("-")[-1]
+
+    return password
+
+
+@pytest.fixture
+def generate_text():
+    text = uuid.uuid4().__str__().split("-")[-1]
+
+    return text
+
+# @pytest.fixture
 # def new_user_authorized():
 #     print("\ncreating and authorization user")
 #

@@ -17,6 +17,15 @@ class BasePage:
     def go_to(self, url):
         self.driver.get(url)
 
+    def go_to_signup_page(self):
+        self.driver.find_element(*BasePageLocators.SIGNUP_LINK).click()
+
+    def go_to_login_page(self):
+        self.driver.find_element(*BasePageLocators.LOGIN_LINK).click()
+
+    def go_to_create_post_page(self):
+        self.driver.find_element(*BasePageLocators.CREATE_POST_LINK).click()
+
     def should_be_open_page(self):
         assert self.is_element_present(*BasePageLocators.LOGO), \
             "Page don't open!"
