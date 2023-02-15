@@ -12,7 +12,7 @@ class SignupPage(BasePage):
         self.driver.find_element(*SignupPageLocators.PASSWORD_FIELD).send_keys(generate_password)
         self.driver.find_element(*SignupPageLocators.CONFIRM_PASSWORD_FIELD).send_keys(generate_password)
         self.driver.find_element(*SignupPageLocators.SIGNUP_BUTTON).click()
-        assert self.wait_element_present(*BasePageLocators.CREATE_POST_LINK), \
+        assert self.wait_of_element_present(*BasePageLocators.CREATE_POST_LINK), \
             "Registration failed (valid values)!"
 
     def signup_invalid(self, generate_username, generate_password):

@@ -45,7 +45,7 @@ class BasePage:
             return False
         return True
 
-    def wait_element_present(self, how, what):
+    def wait_of_element_present(self, how, what):
         try:
             WebDriverWait(self.driver, 3). \
                 until(EC.presence_of_element_located((how, what)))

@@ -16,6 +16,7 @@ class LoginPageLocators:
     REQUIRED_MESSAGE = (By.XPATH, '//span[text()="required"]')
     CONTAINS_INVALID_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="contains invalid characters"]')
     MUST_BE_MORE_THAN_8_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="must be more than 8 characters"]')
+    INVALID_PASSWORD_MESSAGE = (By.XPATH, '//div[text()="invalid password"]')
 
 
 class SignupPageLocators:
