@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 import requests
 import uuid
-from entities.user import User
+from entities.user import User, UserAuthorized
 
 
 @pytest.fixture
@@ -31,14 +31,6 @@ def new_user():
     return User(username, password)
 
 
-# @pytest.fixture
-# def generate_data():
-#     username = uuid.uuid4().__str__().split("-")[-1]
-#     password = uuid.uuid1().__str__().split("-")[-1]
-#     text = uuid.uuid4().__str__().split("-")[-1]
-#     # return username, password, text
-#     return {"username": username, "password": password, "text": text}
-
 @pytest.fixture
 def generate_username():
     username = uuid.uuid4().__str__().split("-")[-1]
@@ -59,8 +51,9 @@ def generate_text():
 
     return text
 
+
 # @pytest.fixture
-# def new_user_authorized():
+# def user_authorized():
 #     print("\ncreating and authorization user")
 #
 #     username = uuid.uuid4().__str__().split("-")[-1]
@@ -78,4 +71,4 @@ def generate_text():
 #
 #     assert authorization_user_response.json()["token"] != "", "User not authorized!"
 #
-#     return User(username, password)
+#     return UserAuthorized(username, password)

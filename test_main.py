@@ -19,14 +19,16 @@ class TestsSignup:
         signup_page = SignupPage(driver)
         base_page.open()
         base_page.go_to_signup_page()
-        signup_page.signup_valid(generate_username, generate_password)
+        signup_page.entry_valid_date(generate_username, generate_password)
 
-    def test_signup_invalid(self, driver, generate_username, generate_password):
+    def test_signup_invalid(self, driver, generate_username, generate_password, generate_text):
         base_page = BasePage(driver)
         signup_page = SignupPage(driver)
         base_page.open()
         base_page.go_to_signup_page()
-        signup_page.signup_invalid(generate_username, generate_password)
+        signup_page.empty_fields()
+        signup_page.should_be_required_massage()
+        signup_page.entry_invalid_date(generate_username, generate_password, generate_text)
 
 
 @pytest.mark.login
@@ -77,6 +79,7 @@ class TestsPost:
 
 @pytest.mark.comment
 class TestsComment:
+    @pytest.mark.only
     def test_create_comment(self, driver, new_user, generate_text):
         base_page = BasePage(driver)
         login_page = LoginPage(driver)

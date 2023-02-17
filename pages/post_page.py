@@ -1,5 +1,4 @@
 import time
-
 from .base_page import BasePage
 from .locators import PostPageLocators
 from .locators import BasePageLocators
@@ -33,5 +32,5 @@ class PostPage(BasePage):
         assert self.is_element_present(*PostPageLocators.DELETE_BUTTON), "Comment not created!"
 
     def delete_comment(self):
-        self.driver.find_elements(*PostPageLocators.DELETE_BUTTON)[0].click()
+        self.driver.find_element(*PostPageLocators.DELETE_BUTTON).click()
         assert self.is_element_disappeared(*PostPageLocators.DELETE_BUTTON), "Comment not deleted!"
