@@ -136,6 +136,7 @@ class TestsPostAndComment:
 
     @pytest.mark.comment
     class TestsComment:
+        @pytest.mark.only
         def test_create_comment(self, driver, generate_text):
             base_page = BasePage(driver)
             post_page = PostPage(driver)

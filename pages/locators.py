@@ -44,4 +44,5 @@ class PostPageLocators:
     TITLE_POST_TEXT = (By.XPATH, '//div[contains(@class, "Title__Wrapper")]/a')
     COMMENT_TEXT_FIELD = (By.XPATH, '//textarea[@name="comment"]')
     SUBMIT_BUTTON = (By.XPATH, '//button[@type="submit"]')
-    COMMENT_COUNTER = (By.XPATH, '//div[contains(@class, "Detail__Wrapper")]/a[text()=" comment"]')
+    # COMMENT_COUNTER = (By.XPATH, '//div[contains(@class, "Detail__Wrapper")]/a[text()=" comment"]')
+    COMMENT_COUNTER = (By.XPATH, '//*[@id="root"]/div/main/ul/li[1]/div/div[2]/div[3]/a[1]')

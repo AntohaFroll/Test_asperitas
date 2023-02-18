@@ -30,12 +30,15 @@ class PostPage(BasePage):
         assert self.wait_of_element_present(*PostPageLocators.EMPTY_POST_LIST_LABEL), "Post not deleted!"
 
     def create_comment(self, generate_text):
+        self.wait_of_element_present(*PostPageLocators.COMMENT_COUNTER)
         self.driver.find_elements(*PostPageLocators.COMMENT_COUNTER)[0].click()
+        self.wait_of_element_present(*PostPageLocators.COMMENT_TEXT_FIELD)
         self.driver.find_element(*PostPageLocators.COMMENT_TEXT_FIELD).send_keys(generate_text)
+        self.wait_of_element_present(*PostPageLocators.SUBMIT_BUTTON)
         self.driver.find_element(*PostPageLocators.SUBMIT_BUTTON).click()
 
     def should_be_comment_created(self):
-        assert self.is_element_present(*PostPageLocators.DELETE_BUTTON), "Comment not created!"
+        assert self.wait_of_element_present(*PostPageLocators.DELETE_BUTTON), "Comment not created!"
 
     def delete_comment(self):
         self.driver.find_element(*PostPageLocators.DELETE_BUTTON).click()
