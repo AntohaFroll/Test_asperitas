@@ -104,51 +104,49 @@ class TestsLogin:
         login_page.entry_invalid_date(new_user, generate_username, generate_password)
 
 
-@pytest.mark.post
-class TestsPost:
-    def test_create_text_post(self, driver, new_user, generate_text):
+class TestsPostAndComment:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, driver, new_user):
         base_page = BasePage(driver)
         login_page = LoginPage(driver)
-        post_page = PostPage(driver)
         base_page.open()
         base_page.go_to_login_page()
         login_page.entry_valid_date(new_user)
         login_page.should_be_authorized_user()
-        base_page.go_to_create_post_page()
-        post_page.create_text_post(generate_text)
 
-    def test_delete_post(self, driver, new_user, generate_text):
-        base_page = BasePage(driver)
-        login_page = LoginPage(driver)
-        post_page = PostPage(driver)
-        base_page.open()
-        base_page.go_to_login_page()
-        login_page.entry_valid_date(new_user)
-        login_page.should_be_authorized_user()
-        base_page.go_to_create_post_page()
-        post_page.create_text_post(generate_text)
-        post_page.delete_post()
+    @pytest.mark.post
+    class TestsPost:
+        def test_create_text_post(self, driver, generate_text):
+            base_page = BasePage(driver)
+            post_page = PostPage(driver)
+            base_page.open()
+            base_page.go_to_create_post_page()
+            post_page.create_text_post(generate_text)
+            post_page.should_be_post_created()
 
+        def test_delete_post(self, driver, generate_text):
+            base_page = BasePage(driver)
+            post_page = PostPage(driver)
+            base_page.open()
+            base_page.go_to_create_post_page()
+            post_page.create_text_post(generate_text)
+            post_page.should_be_post_created()
+            post_page.delete_post()
+            post_page.should_be_post_deleted()
 
-@pytest.mark.comment
-class TestsComment:
-    def test_create_comment(self, driver, new_user, generate_text):
-        base_page = BasePage(driver)
-        login_page = LoginPage(driver)
-        post_page = PostPage(driver)
-        base_page.open()
-        base_page.go_to_login_page()
-        login_page.entry_valid_date(new_user)
-        login_page.should_be_authorized_user()
-        post_page.create_comment(generate_text)
+    @pytest.mark.comment
+    class TestsComment:
+        def test_create_comment(self, driver, generate_text):
+            base_page = BasePage(driver)
+            post_page = PostPage(driver)
+            base_page.open()
+            post_page.create_comment(generate_text)
+            post_page.should_be_comment_created()
 
-    def test_delete_comment(self, driver, new_user, generate_text):
-        base_page = BasePage(driver)
-        login_page = LoginPage(driver)
-        post_page = PostPage(driver)
-        base_page.open()
-        base_page.go_to_login_page()
-        login_page.entry_valid_date(new_user)
-        login_page.should_be_authorized_user()
-        post_page.create_comment(generate_text)
-        post_page.delete_comment()
+        def test_delete_comment(self, driver, generate_text):
+            base_page = BasePage(driver)
+            post_page = PostPage(driver)
+            base_page.open()
+            post_page.create_comment(generate_text)
+            post_page.delete_comment()
+            post_page.should_be_comment_deleted()
