@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 import requests
 import uuid
+# TODO зачем тебе UserAuthorized? Это же копия User...
 from entities.user import User, UserAuthorized
 
 
@@ -21,6 +22,7 @@ def new_user():
     username = uuid.uuid4().__str__().split("-")[-1]
     password = uuid.uuid4().__str__().split("-")[-1]
 
+    # TODO url надо выносить наверх файла, в константы
     url = "https://asperitas.vercel.app/api/register"
     data = {"username": username, "password": password}
 
@@ -31,6 +33,8 @@ def new_user():
     return User(username, password)
 
 
+# TODO generate_username и generate_password не отличаются, соответственно,
+# TODO можно просто сделать одну фикстуру generate_unique_string
 @pytest.fixture
 def generate_username():
     username = uuid.uuid4().__str__().split("-")[-1]
@@ -44,7 +48,7 @@ def generate_password():
 
     return password
 
-
+# TODO зачем это, если везде можно просто вставлять "Hello world"?
 @pytest.fixture
 def generate_text():
     text = uuid.uuid4().__str__().split("-")[-1]

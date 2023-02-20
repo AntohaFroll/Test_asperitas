@@ -5,6 +5,9 @@ from .locators import BasePageLocators
 
 
 class PostPage(BasePage):
+    # TODO надо дописать тогда еще метод create_link_post
+    # TODO или же параметризовать метод create_post так,
+    # TODO чтобы можно было создать и такой, и такой пост через одну функцию
     def create_text_post(self, generate_text):
         time.sleep(3)
         self.wait_element_to_be_clickable(*PostPageLocators.TEXT_RADIOBUTTON)
@@ -13,6 +16,7 @@ class PostPage(BasePage):
         self.driver.find_element(*PostPageLocators.PROGRAMMING_CATEGORY).click()
         self.driver.find_element(*PostPageLocators.TITLE_FIELD).send_keys(generate_text)
         self.driver.find_element(*PostPageLocators.TEXT_FIELD).send_keys(generate_text)
+        # TODO sleep у тебя вообще не должен использоваться. Тут нужен wait
         time.sleep(3)
         self.driver.find_element(*PostPageLocators.CREATE_POST_BUTTON).click()
 

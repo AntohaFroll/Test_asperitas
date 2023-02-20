@@ -31,6 +31,8 @@ class SignupPage(BasePage):
         self.driver.find_element(*SignupPageLocators.USERNAME_FIELD).send_keys(generate_username)
         self.driver.find_element(*SignupPageLocators.SIGNUP_BUTTON).click()
 
+    # TODO если у тебя в названии метода 2 глагола (be и contains),
+    # TODO то метод должен называться should_contain
     def should_be_contains_invalid_characters_message(self):
         assert self.wait_of_element_present(*SignupPageLocators.CONTAINS_INVALID_CHARACTERS_MESSAGE), \
             "Signup failed (invalid user name)!"
@@ -46,6 +48,7 @@ class SignupPage(BasePage):
         self.driver.find_element(*SignupPageLocators.PASSWORD_FIELD).send_keys(generate_password[0:7])
         self.driver.find_element(*SignupPageLocators.SIGNUP_BUTTON).click()
 
+    # TODO тут should_be_longer_than_8_characters
     def should_be_most_be_more_than_8_characters_message(self):
         assert self.wait_of_element_present(*SignupPageLocators.MUST_BE_MORE_THAN_8_CHARACTERS_MESSAGE), \
             "Signup failed (short password)!"
