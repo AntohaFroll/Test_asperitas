@@ -45,6 +45,7 @@ class BasePage:
             return False
         return True
 
+    # TODO функция с "wait" в имени не должна ничего возвращать
     def wait_of_element_present(self, how, what):
         try:
             WebDriverWait(self.driver, 3). \
@@ -53,6 +54,7 @@ class BasePage:
             return False
         return True
 
+    # TODO функция с "wait" в имени не должна ничего возвращать
     def wait_element_to_be_clickable(self, how, what):
         try:
             WebDriverWait(self.driver, 3). \

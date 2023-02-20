@@ -4,7 +4,7 @@ from .locators import BasePageLocators
 
 
 class LoginPage(BasePage):
-
+    # TODO тут, наверное, data, а не date
     def entry_valid_date(self, user):
         self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
         self.driver.find_element(*LoginPageLocators.PASSWORD_FIELD).send_keys(user.password)
@@ -21,6 +21,7 @@ class LoginPage(BasePage):
     def empty_fields(self):
         self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
 
+    # TODO generate_username не нужен тут
     def entry_invalid_date(self, user, generate_username, generate_password):
         self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys("$#%")
         self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()

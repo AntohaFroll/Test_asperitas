@@ -15,6 +15,8 @@ def test_open_site(driver):
 @pytest.mark.signup
 class TestsSignup:
     def test_signup_valid(self, driver, generate_username, generate_password):
+        # TODO тут можно повторяющиеся действия сгруппировать в отдельный метод
+        # TODO и вызывать его как setUp
         base_page = BasePage(driver)
         base_page.open()
         base_page.go_to_signup_page()
@@ -105,6 +107,7 @@ class TestsLogin:
 
 
 class TestsPostAndComment:
+    # TODO эта фикстура должна лежать в conftest, не?
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, driver, new_user):
         base_page = BasePage(driver)
