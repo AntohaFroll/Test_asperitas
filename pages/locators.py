@@ -13,10 +13,10 @@ class LoginPageLocators:
     USERNAME_FIELD = (By.XPATH, '//input[@name="username"]')
     PASSWORD_FIELD = (By.XPATH, '//input[@name="password"]')
     LOGIN_BUTTON = (By.XPATH, '//button[@type="submit"]')
-    REQUIRED_MESSAGE = (By.XPATH, '//span[text()="required"]')
-    CONTAINS_INVALID_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="contains invalid characters"]')
-    MUST_BE_MORE_THAN_8_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="must be more than 8 characters"]')
-    INVALID_PASSWORD_MESSAGE = (By.XPATH, '//div[text()="invalid password"]')
+    MESSAGE_REQUIRED = (By.XPATH, '//span[text()="required"]')
+    MESSAGE_CONTAINS_INVALID_CHARACTERS = (By.XPATH, '//span[text()="contains invalid characters"]')
+    MESSAGE_MUST_BE_MORE_THAN_8_CHARACTERS = (By.XPATH, '//span[text()="must be more than 8 characters"]')
+    MESSAGE_INVALID_PASSWORD = (By.XPATH, '//div[text()="invalid password"]')
 
 
 class SignupPageLocators:
@@ -24,10 +24,10 @@ class SignupPageLocators:
     PASSWORD_FIELD = (By.XPATH, '//input[@name="password"]')
     CONFIRM_PASSWORD_FIELD = (By.XPATH, '//input[@name="password2"]')
     SIGNUP_BUTTON = (By.XPATH, '//button[@type="submit"]')
-    REQUIRED_MESSAGE = (By.XPATH, '//span[text()="required"]')
-    CONTAINS_INVALID_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="contains invalid characters"]')
-    MUST_BE_MORE_THAN_8_CHARACTERS_MESSAGE = (By.XPATH, '//span[text()="must be more than 8 characters"]')
-    PASSWORD_MUST_MATCH_MESSAGE = (By.XPATH, '//span[text()="passwords must match"]')
+    MESSAGE_REQUIRED = (By.XPATH, '//span[text()="required"]')
+    MESSAGE_CONTAINS_INVALID_CHARACTERS = (By.XPATH, '//span[text()="contains invalid characters"]')
+    MESSAGE_MUST_BE_MORE_THAN_8_CHARACTERS = (By.XPATH, '//span[text()="must be more than 8 characters"]')
+    MESSAGE_PASSWORD_MUST_MATCH = (By.XPATH, '//span[text()="passwords must match"]')
     CREATE_POST_BUTTON = (By.XPATH, '//a[contains(@class, "jEpBlT")]')
 
 

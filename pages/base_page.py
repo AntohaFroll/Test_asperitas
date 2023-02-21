@@ -1,7 +1,7 @@
 from .locators import BasePageLocators
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import TimeoutException
 
 
 class BasePage:
@@ -30,13 +30,6 @@ class BasePage:
         assert self.is_element_present(*BasePageLocators.LOGO), \
             "Page don't open!"
 
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(how, what)
-        except NoSuchElementException:
-            return False
-        return True
-
     def is_element_disappeared(self, how, what, timeout=3):
         try:
             WebDriverWait(self.driver, timeout, 1, TimeoutException). \
@@ -45,7 +38,7 @@ class BasePage:
             return False
         return True
 
-    def wait_of_element_present(self, how, what):
+    def is_element_present(self, how, what):
         try:
             WebDriverWait(self.driver, 3). \
                 until(EC.presence_of_element_located((how, what)))
@@ -53,7 +46,7 @@ class BasePage:
             return False
         return True
 
-    def wait_element_to_be_clickable(self, how, what):
+    def is_element_to_be_clickable(self, how, what):
         try:
             WebDriverWait(self.driver, 3). \
                 until(EC.element_to_be_clickable((how, what)))
