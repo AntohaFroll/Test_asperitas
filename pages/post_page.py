@@ -16,6 +16,17 @@ class PostPage(BasePage):
         self.driver.find_element(*PostPageLocators.TEXT_FIELD).send_keys(generate_unique_string)
         self.driver.find_element(*PostPageLocators.CREATE_POST_BUTTON).click()
 
+    def create_url_post(self, generate_unique_string, generate_url):
+        self.driver.implicitly_wait(5)
+        self.is_element_to_be_clickable(*PostPageLocators.URL_RADIOBUTTON)
+        time.sleep(3)
+        self.driver.find_element(*PostPageLocators.URL_RADIOBUTTON).click()
+        self.driver.find_element(*PostPageLocators.CATEGORY_SELECTOR).click()
+        self.driver.find_element(*PostPageLocators.PROGRAMMING_CATEGORY).click()
+        self.driver.find_element(*PostPageLocators.TITLE_FIELD).send_keys(generate_unique_string)
+        self.driver.find_element(*PostPageLocators.URL_FIELD).send_keys(generate_url)
+        self.driver.find_element(*PostPageLocators.CREATE_POST_BUTTON).click()
+
     def should_be_post_created(self):
         assert self.is_element_present(*PostPageLocators.TITLE_POST), "Post not created!"
 

@@ -21,20 +21,20 @@ class LoginPage(BasePage):
     def empty_fields(self):
         self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
 
-    def entry_invalid_date(self, user, generate_unique_string, generate_password):
+    def entry_invalid_data(self, user, generate_password):
         self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys("$#%")
         self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
         assert self.is_element_present(*LoginPageLocators.MESSAGE_CONTAINS_INVALID_CHARACTERS), \
             "Login failed (invalid user name)!"
 
         self.driver.refresh()
-        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(generate_unique_string)
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
         self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
         assert self.is_element_present(*LoginPageLocators.MESSAGE_REQUIRED), \
             "Login failed (no password)!"
 
         self.driver.refresh()
-        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(generate_unique_string)
+        self.driver.find_element(*LoginPageLocators.USERNAME_FIELD).send_keys(user.username)
         self.driver.find_element(*LoginPageLocators.PASSWORD_FIELD).send_keys(generate_password[0])
         self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
         assert self.is_element_present(*LoginPageLocators.MESSAGE_MUST_BE_MORE_THAN_8_CHARACTERS), \
