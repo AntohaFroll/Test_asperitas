@@ -18,51 +18,52 @@ class TestsSignup:
     def setup(self, driver):
         base_page = BasePage(driver)
         base_page.open()
-        base_page.go_to_signup_page()
+        signup_page = SignupPage(driver)
+        signup_page.go_to_signup_page()
 
     def test_signup_valid(self, driver, generate_unique_string, generate_password):
         signup_page = SignupPage(driver)
-        signup_page.entry_valid_date(generate_unique_string, generate_password)
+        signup_page.enter_valid_date(generate_unique_string, generate_password)
         signup_page.should_be_authorized_user()
 
     def test_empty_fields(self, driver):
         signup_page = SignupPage(driver)
-        signup_page.empty_fields()
+        signup_page.click_to_signup_btn()
         signup_page.should_be_massage_required()
 
     def test_invalid_username_and_empty_password_field(self, driver):
         signup_page = SignupPage(driver)
-        signup_page.entry_invalid_username_and_empty_password_field()
+        signup_page.enter_invalid_username_and_empty_password_field()
         signup_page.should_be_message_contains_invalid_characters()
 
     def test_valid_username_and_empty_password_field(self, driver, generate_unique_string):
         signup_page = SignupPage(driver)
-        signup_page.entry_valid_username_and_empty_password_field(generate_unique_string)
+        signup_page.enter_valid_username_and_empty_password_field(generate_unique_string)
         signup_page.should_be_massage_required()
 
     def test_valid_username_and_short_password(self, driver, generate_unique_string, generate_password):
         signup_page = SignupPage(driver)
-        signup_page.entry_valid_username_and_short_password(generate_unique_string, generate_password)
+        signup_page.enter_valid_username_and_short_password(generate_unique_string, generate_password)
         signup_page.should_be_message_most_be_more_than_8_characters()
 
     def test_entry_valid_username_password_and_7_signs_password(self, driver, generate_unique_string,
                                                                 generate_password):
         signup_page = SignupPage(driver)
-        signup_page.entry_valid_username_password_and_7_signs_confirm_password(generate_unique_string,
+        signup_page.enter_valid_username_password_and_7_signs_confirm_password(generate_unique_string,
                                                                                generate_password)
         signup_page.should_be_message_most_be_more_than_8_characters()
 
     def test_entry_valid_username_password_and_empty_confirm_password_field(self, driver, generate_unique_string,
                                                                             generate_password):
         signup_page = SignupPage(driver)
-        signup_page.entry_valid_username_password_and_empty_confirm_password_field(generate_unique_string,
+        signup_page.enter_valid_username_password_and_empty_confirm_password_field(generate_unique_string,
                                                                                    generate_password)
         signup_page.should_be_message_password_must_match()
 
     def test_entry_valid_username_password_and_invalid_confirm_password_field(self, driver, generate_unique_string,
                                                                               generate_password):
         signup_page = SignupPage(driver)
-        signup_page.entry_valid_username_password_and_invalid_confirm_password_field(generate_unique_string,
+        signup_page.enter_valid_username_password_and_invalid_confirm_password_field(generate_unique_string,
                                                                                      generate_password)
         signup_page.should_be_message_password_must_match()
 
@@ -72,18 +73,19 @@ class TestsLogin:
     def setup(self, driver):
         base_page = BasePage(driver)
         base_page.open()
-        base_page.go_to_login_page()
+        login_page = LoginPage(driver)
+        login_page.go_to_login_page()
 
     def test_login_valid(self, driver, new_user):
         login_page = LoginPage(driver)
-        login_page.entry_valid_data(new_user)
+        login_page.enter_valid_data(new_user)
         login_page.should_be_authorized_user()
 
     def test_login_invalid(self, driver, new_user, generate_password):
         login_page = LoginPage(driver)
-        login_page.empty_fields()
+        login_page.click_to_login_btn()
         login_page.should_be_required_massage()
-        login_page.entry_invalid_data(new_user, generate_password)
+        login_page.enter_invalid_data(new_user, generate_password)
 
 
 class TestsPostAndComment:
@@ -93,11 +95,12 @@ class TestsPostAndComment:
         def setup(self, driver, new_user):
             base_page = BasePage(driver)
             login_page = LoginPage(driver)
+            post_page = PostPage(driver)
             base_page.open()
-            base_page.go_to_login_page()
-            login_page.entry_valid_data(new_user)
+            login_page.go_to_login_page()
+            login_page.enter_valid_data(new_user)
             login_page.should_be_authorized_user()
-            base_page.go_to_create_post_page()
+            post_page.go_to_create_post_page()
 
         def test_create_text_post(self, driver, generate_unique_string):
             post_page = PostPage(driver)
@@ -123,8 +126,8 @@ class TestsPostAndComment:
             base_page = BasePage(driver)
             login_page = LoginPage(driver)
             base_page.open()
-            base_page.go_to_login_page()
-            login_page.entry_valid_data(new_user)
+            login_page.go_to_login_page()
+            login_page.enter_valid_data(new_user)
             login_page.should_be_authorized_user()
 
         def test_create_comment(self, driver, generate_unique_string):
