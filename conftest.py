@@ -3,6 +3,7 @@ from selenium import webdriver
 import requests
 import uuid
 from entities.user import User
+from entities.post import Post
 
 reg_url = "https://asperitas.vercel.app/api/register"
 post_url = "https://asperitas.vercel.app/api/posts"
@@ -30,10 +31,13 @@ def new_user():
 
 @pytest.fixture
 def new_post():
-    unique_string = uuid.uuid4().__str__().split("-")[-1]
-    data = {"category": "music", "type": "text", "title": unique_string, "text": unique_string}
+    print("\ncreating new post")
+    title = uuid.uuid4().__str__().split("-")[-1]
+    text = uuid.uuid4().__str__().split("-")[-1]
+    data = {"category": "music", "type": "text", "title": title, "text": text}
     create_post_response = requests.post(post_url, json=data)
     assert create_post_response.json() != "", "Post not create"
+    return Post(title, text)
 
 
 @pytest.fixture
