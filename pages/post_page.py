@@ -56,9 +56,12 @@ class PostPage(BasePage):
     def should_be_comment_created(self):
         assert self.is_element_present(*PostPageLocators.DELETE_BTN), "Comment not created!"
 
-    def delete_comment(self):
-        time.sleep(3)
-        self.driver.find_element(*PostPageLocators.DELETE_BTN).click()
+    def delete_comment(self, post, comment):
+        self.driver.find_element(*BasePageLocators.USERNAME_LINK).click()
+        self.is_element_present(By.XPATH, f"//a[text()='{post.title}']")
+        self.driver.find_element(By.XPATH, f"//a[text()='{post.title}']").click()
+        self.is_element_present(By.XPATH, f"//a[@href='/u/{comment.username}']/following-sibling::button")
+        self.driver.find_element(By.XPATH, f"//a[@href='/u/{comment.username}']/following-sibling::button").click()
 
-    def should_be_comment_deleted(self):
-        assert self.is_element_disappeared(*PostPageLocators.DELETE_BTN), "Comment not deleted!"
+    def should_be_comment_deleted(self, comment):
+        assert self.is_element_present(By.XPATH, "//div[text()='no comments']"), "Comment not deleted!"

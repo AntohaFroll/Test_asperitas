@@ -4,10 +4,12 @@ import requests
 import uuid
 from entities.user import User
 from entities.post import Post
+from entities.comment import Comment
 
 reg_url = "https://asperitas.vercel.app/api/register"
 auth_url = "https://asperitas.vercel.app/api/login"
 post_url = "https://asperitas.vercel.app/api/posts"
+comment_url = "https://asperitas.vercel.app/api/post/"
 
 
 @pytest.fixture
@@ -21,7 +23,7 @@ def driver():
 
 @pytest.fixture
 def new_user():
-    print("\nCreating user")
+    print("\nCreating new user")
     username = uuid.uuid4().__str__().split("-")[-1]
     password = uuid.uuid4().__str__().split("-")[-1]
     data = {"username": username, "password": password}
@@ -39,8 +41,22 @@ def new_post(new_user):
     data = {"category": "music", "type": "text", "title": title, "text": text}
     authorization = {"authorization": f"Bearer {new_user.user_token}"}
     create_post_response = requests.post(post_url, json=data, headers=authorization)
+    post_id = create_post_response.json()["id"]
     assert create_post_response.json() != "", "Post not create"
-    return Post(title, text)
+    return Post(title, text, post_id)
+
+
+@pytest.fixture
+def new_comment(new_user, new_post):
+    print("\nCreating new comment")
+    text = uuid.uuid4().__str__().split("-")[-1]
+    data = {"comment": text}
+    authorization = {"authorization": f"Bearer {new_user.user_token}"}
+    create_comment_url = comment_url + new_post.post_id
+    create_comment_response = requests.post(create_comment_url, json=data, headers=authorization)
+    username = create_comment_response.json()["comments"][0]["author"]["username"]
+    assert create_comment_response.json()["comments"][0]["body"] == text, "Comment not create"
+    return Comment(username)
 
 
 @pytest.fixture

@@ -112,7 +112,6 @@ class TestsPostAndComment:
             post_page.create_url_post(generate_unique_string, generate_url)
             post_page.should_be_post_created()
 
-        @pytest.mark.only
         def test_delete_post(self, driver, new_post):
             post_page = PostPage(driver)
             post_page.delete_post(new_post)
@@ -134,8 +133,7 @@ class TestsPostAndComment:
             post_page.create_comment(generate_unique_string)
             post_page.should_be_comment_created()
 
-        def test_delete_comment(self, driver, generate_unique_string):
+        def test_delete_comment(self, driver, generate_unique_string, new_post, new_comment):
             post_page = PostPage(driver)
-            post_page.create_comment(generate_unique_string)
-            post_page.delete_comment()
-            post_page.should_be_comment_deleted()
+            post_page.delete_comment(new_post, new_comment)
+            post_page.should_be_comment_deleted(new_comment)
