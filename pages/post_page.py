@@ -35,16 +35,9 @@ class PostPage(BasePage):
         assert self.is_element_present(*PostPageLocators.TITLE_POST), "Post not created!"
 
     def delete_post(self, post):
-        # self.driver.find_element(*BasePageLocators.USERNAME_LINK).click()
-        # self.is_element_present(*PostPageLocators.TITLE_POST_TEXT)
-        # self.driver.find_element(*PostPageLocators.TITLE_POST_TEXT).click()
-        # self.is_element_present(*PostPageLocators.DELETE_BTN)
-        # self.driver.find_element(*PostPageLocators.DELETE_BTN).click()
-
         self.driver.find_element(*BasePageLocators.USERNAME_LINK).click()
-        self.is_element_present(By.XPATH, f'//span[text()="{post.title}"]')
-        self.driver.find_element(By.XPATH, f'//span[text()="{post.title}"]').click()
-        self.driver.refresh
+        self.is_element_present(By.XPATH, f"//a[text()='{post.title}']")
+        self.driver.find_element(By.XPATH, f"//a[text()='{post.title}']").click()
         self.is_element_present(*PostPageLocators.DELETE_BTN)
         self.driver.find_element(*PostPageLocators.DELETE_BTN).click()
 

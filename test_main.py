@@ -115,8 +115,6 @@ class TestsPostAndComment:
         @pytest.mark.only
         def test_delete_post(self, driver, new_post):
             post_page = PostPage(driver)
-            # post_page.create_text_post(generate_unique_string)
-            # post_page.should_be_post_created()
             post_page.delete_post(new_post)
             post_page.should_be_post_deleted()
 

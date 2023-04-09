@@ -6,36 +6,39 @@ from entities.user import User
 from entities.post import Post
 
 reg_url = "https://asperitas.vercel.app/api/register"
+auth_url = "https://asperitas.vercel.app/api/login"
 post_url = "https://asperitas.vercel.app/api/posts"
 
 
 @pytest.fixture
 def driver():
-    print("\nstart browser for test")
+    print("\nStart browser for test")
     driver = webdriver.Chrome()
     yield driver
-    print("\nquit browser")
+    print("\nQuit browser")
     driver.quit()
 
 
 @pytest.fixture
 def new_user():
-    print("\ncreating user")
+    print("\nCreating user")
     username = uuid.uuid4().__str__().split("-")[-1]
     password = uuid.uuid4().__str__().split("-")[-1]
     data = {"username": username, "password": password}
     create_user_response = requests.post(reg_url, json=data)
-    assert create_user_response.json()["token"] != "", "User not create"
-    return User(username, password)
+    user_token = create_user_response.json()["token"]
+    assert user_token != "", "User not create"
+    return User(username, password, user_token)
 
 
 @pytest.fixture
-def new_post():
-    print("\ncreating new post")
+def new_post(new_user):
+    print("\nCreating new post")
     title = uuid.uuid4().__str__().split("-")[-1]
     text = uuid.uuid4().__str__().split("-")[-1]
     data = {"category": "music", "type": "text", "title": title, "text": text}
-    create_post_response = requests.post(post_url, json=data)
+    authorization = {"authorization": f"Bearer {new_user.user_token}"}
+    create_post_response = requests.post(post_url, json=data, headers=authorization)
     assert create_post_response.json() != "", "Post not create"
     return Post(title, text)
 
